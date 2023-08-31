@@ -3,8 +3,8 @@ import HandScreen from './hands/hand'
 import './index.css'
 import { IUser, UtilService } from './ioc/iutil'
 import { UtilApplicationService } from './ioc/util'
-import CardGamer from './players/cardgamer'
-import TableScreen from './table/table'
+import CardGamer from './pages/players/cardgamer'
+import TableScreen from './pages//table/table'
 const _service = new UtilApplicationService()
 const service = new UtilService(_service)
 import "primereact/resources/themes/lara-light-indigo/theme.css";
@@ -59,7 +59,7 @@ function App() {
     const response = service.changeUserrOrders(users)
     setUsers(response)
 
-  }, [])
+  }, [users])
 
   return (
     <main className='bg-black'>

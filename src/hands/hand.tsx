@@ -36,6 +36,8 @@ const HandScreen: React.FC = () => {
                             type={'number'}
                             min={0}
                             max={5000}
+                            onChange={() => { }
+                            }
                         ></input>
                     </div>
                 </div>

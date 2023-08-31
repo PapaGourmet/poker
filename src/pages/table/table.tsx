@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from "react"
-import { UtilService } from "../ioc/iutil"
-import { UtilApplicationService } from "../ioc/util"
+import { UtilService } from "../../ioc/iutil"
+import { UtilApplicationService } from "../../ioc/util"
 
 
 const _service = new UtilApplicationService()
@@ -21,7 +21,6 @@ interface IBordo {
 const TableScreen: React.FC<ITableProps> = ({ open }) => {
 
     const [bordo, setBordo] = useState<IBordo>({})
-
 
 
     useEffect(() => {

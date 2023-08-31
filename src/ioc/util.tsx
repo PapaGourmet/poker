@@ -105,26 +105,20 @@ export class UtilApplicationService implements IUtilService {
             const diffLen = 6 - users.length
             console.log('diff', diffLen)
             orders.splice(2, diffLen)
-            console.log(orders)
         }
 
         //@ts-ignore
         users.forEach((a, b, c) => {
 
-            console.log(b)
             if (b <= 1) {
                 a['order'] = orders[b]
-                console.log(orders[b])
             } else if ((c.length - 1) - b < 3) {
                 const diff = (c.length - 1) - b
                 a['order'] = orders[orders.length - 1 - diff]
-                console.log(orders[orders.length - 1 - diff])
             } else if (b === 2) {
                 a['order'] = orders[2]
-                console.log(orders[2])
             } else {
                 a['order'] = `UTG+${b - 2}`
-                console.log(`UTG+${b - 2}`)
             }
         })
 
