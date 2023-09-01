@@ -11,3 +11,9 @@ export interface IUser {
     sub: string,
     sectionId: string
 }
+
+export interface ITable {
+    name: string,
+    code: string,
+    lord: string
+}
