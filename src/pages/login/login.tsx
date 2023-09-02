@@ -31,8 +31,23 @@ const LoginScreen: React.FC = () => {
             localStorage.setItem('name', name)
             localStorage.setItem('isVerify', email_verified)
             localStorage.setItem('lord', sub)
+            localStorage.setItem('email', email)
+
             try {
-                await service.AddOrUpdateuser({ name, picture, email, locale, sub, stack: 0, sectionId: '0' })
+                await service.AddOrUpdateuser({
+                    name,
+                    picture,
+                    email,
+                    locale,
+                    sub,
+                    stack: 5000,
+                    position: '',
+                    action: '',
+                    bet: 0,
+                    card1: 'versus',
+                    card2: 'versus'
+
+                })
                 navigate('/home/mesas')
             } catch (e) {
                 throw e

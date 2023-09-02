@@ -20,7 +20,9 @@ const TableScreen: React.FC = () => {
         const _table: ITable = {
             name,
             code,
-            lord: localStorage.getItem('lord') || ""
+            lord: localStorage.getItem('lord') || "",
+            players: [],
+            status: ''
         }
 
         try {

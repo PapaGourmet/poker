@@ -8,6 +8,11 @@ import ModalEnterRoom from '../modals/modal-enter-room'
 import { toast, ToastContainer } from "react-toastify"
 import 'react-toastify/dist/ReactToastify.css'
 import { useNavigate } from 'react-router-dom'
+import { TableService } from '../ioc/itableservice'
+import { TableFirestoreService } from '../ioc/tablefirestoreservice'
+import { UtilApplicationService } from '../../../../ioc/util'
+const _service = new TableFirestoreService()
+const service = new TableService(_service)
 const notify = (message: string) => toast(message,
     {
         position: "top-center",
@@ -26,18 +31,43 @@ const TableComponent: React.FC = () => {
 
     const [isOpen, setIsOpen] = useState(false)
     const [lord, setLord] = useState("")
+    const [confirmCode, setConfirmCode] = useState<string | null>(null)
     const [statusCode, setStatusCode] = useState<boolean | undefined>(undefined)
     const navigate = useNavigate()
 
 
     useEffect(() => {
 
-        if (!statusCode && statusCode !== undefined) {
-            notify(`Acesso negado`)
-            setStatusCode(undefined)
-        } else if (statusCode && statusCode !== undefined) {
-            navigate('/')
+        const run = async () => {
+
+            if (!statusCode && statusCode !== undefined) {
+                notify(`Acesso negado`)
+                setStatusCode(undefined)
+            } else if (statusCode && statusCode !== undefined) {
+                const EMAIL = localStorage.getItem('email') || ""
+
+
+                service.getPlayer(EMAIL)
+                    .then(async (response) => {
+                        const { data } = response
+                        const list = Object.keys(data)
+                        const id = list[0]
+                        const obj = data[id]
+
+                        try {
+                            const table = await service.updatePlayerTable(confirmCode || "", EMAIL, obj)
+                            const { status } = table
+
+                            navigate(`/game?code=${confirmCode}&lord=${lord}&status=${status}&email=${EMAIL}`)
+                        } catch (e) {
+                            throw e
+                        }
+
+                    })
+            }
         }
+
+        run()
 
         return () => {
             setStatusCode(undefined)
@@ -71,6 +101,7 @@ const TableComponent: React.FC = () => {
                     isOpen={isOpen}
                     lord={lord}
                     setStatusCode={setStatusCode}
+                    setConfirmCode={setConfirmCode}
                 />
 
                 <table className="min-w-full border border-gray-300">
@@ -105,8 +136,8 @@ const TableComponent: React.FC = () => {
                                     <p
                                         className='text-blue-400 hover:text-blue-100'
                                         onClick={() => {
-                                            setIsOpen(true);
-                                            setLord(x.lord);
+                                            setIsOpen(true)
+                                            setLord(x.lord)
                                         }}
                                     >
                                         entrar

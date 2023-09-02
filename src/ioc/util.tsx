@@ -1,5 +1,6 @@
-import { INaipes, IUser, IUtilService } from "./iutil";
+import { INaipes, IUtilService } from "./iutil";
 import axios, { AxiosRequestConfig } from "axios"
+import { IPlayer } from "../interfaces/interfaces";
 
 
 export class UtilApplicationService implements IUtilService {
@@ -87,7 +88,8 @@ export class UtilApplicationService implements IUtilService {
         ]
     }
 
-    changeUserrOrders(users: IUser[]): IUser[] {
+    changeUserOrders(players: IPlayer[]): IPlayer[] {
+
 
         let orders = [
             'SM',
@@ -98,30 +100,30 @@ export class UtilApplicationService implements IUtilService {
             'BT'
         ]
 
-        let lastUser = users.pop()
-        users.unshift(lastUser!)
+        if (players) {
+            let lastUser = players.pop()
+            players.unshift(lastUser!)
 
-        if (users.length < 6) {
-            const diffLen = 6 - users.length
-            console.log('diff', diffLen)
-            orders.splice(2, diffLen)
+            if (players.length < 6) {
+                const diffLen = 6 - players.length
+                orders.splice(2, diffLen)
+            }
+
+            players.forEach((a, b, c) => {
+
+                if (b <= 1) {
+                    a['position'] = orders[b]
+                } else if ((c.length - 1) - b < 3) {
+                    const diff = (c.length - 1) - b
+                    a['position'] = orders[orders.length - 1 - diff]
+                } else if (b === 2) {
+                    a['position'] = orders[2]
+                } else {
+                    a['position'] = `UTG+${b - 2}`
+                }
+            })
         }
 
-        //@ts-ignore
-        users.forEach((a, b, c) => {
-
-            if (b <= 1) {
-                a['order'] = orders[b]
-            } else if ((c.length - 1) - b < 3) {
-                const diff = (c.length - 1) - b
-                a['order'] = orders[orders.length - 1 - diff]
-            } else if (b === 2) {
-                a['order'] = orders[2]
-            } else {
-                a['order'] = `UTG+${b - 2}`
-            }
-        })
-
-        return users
+        return players
     }
 }

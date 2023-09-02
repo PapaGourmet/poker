@@ -3,27 +3,25 @@ import Modal from "react-modal"
 import { TableService } from "../ioc/itableservice"
 import { TableFirestoreService } from "../ioc/tablefirestoreservice"
 import CodeZodSchema from "../zods/zodcodechema"
-import { toast, ToastContainer } from "react-toastify"
-import { useNavigate } from "react-router-dom"
 const _service = new TableFirestoreService()
 const service = new TableService(_service)
-
 
 
 interface ModalEnterRoomProps {
     HandleOpenModal: React.Dispatch<React.SetStateAction<boolean>>,
     isOpen: boolean,
     lord: string,
-    setStatusCode: React.Dispatch<React.SetStateAction<boolean | undefined>>
+    setStatusCode: React.Dispatch<React.SetStateAction<boolean | undefined>>,
+    setConfirmCode: React.Dispatch<React.SetStateAction<string | null>>
 }
-
 
 const ModalEnterRoom: React.FC<ModalEnterRoomProps> = (
     {
         HandleOpenModal,
         isOpen,
         lord,
-        setStatusCode
+        setStatusCode,
+        setConfirmCode
     }
 ) => {
 
@@ -40,6 +38,7 @@ const ModalEnterRoom: React.FC<ModalEnterRoomProps> = (
 
             if (response) {
                 setStatusCode(true)
+                setConfirmCode(confirmCode)
                 reset()
                 HandleOpenModal(false)
                 return

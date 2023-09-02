@@ -1,3 +1,5 @@
+import { IPlayer } from "../interfaces/interfaces"
+
 export interface IUser {
     name: string,
     stack: number,
@@ -10,7 +12,7 @@ export interface INaipes {
 }
 
 export interface IUtilService {
-    changeUserrOrders(users: IUser[]): IUser[]
+    changeUserOrders(players: IPlayer[]): IPlayer[]
     getNaipes(): INaipes[]
     getShuffleCards(): Promise<any>
 }
@@ -18,8 +20,8 @@ export interface IUtilService {
 export class UtilService {
     constructor(private service: IUtilService) { }
 
-    changeUserrOrders(users: IUser[]): IUser[] {
-        return this.service.changeUserrOrders(users)
+    changeUserOrders(players: IPlayer[]): IPlayer[] {
+        return this.service.changeUserOrders(players)
     }
 
     getNaipes(): INaipes[] {

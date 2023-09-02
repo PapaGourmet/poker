@@ -1,14 +1,13 @@
-import { IUser } from "../../../interfaces/interfaces";
+import { IPlayer } from "../../../interfaces/interfaces";
 
 export interface ILoginService {
-    AddOrUpdateuser(user: IUser): Promise<void>
+    AddOrUpdateuser(user: IPlayer): Promise<void>
 }
-
 
 export class LoginService {
     constructor(private service: ILoginService) { }
 
-    async AddOrUpdateuser(user: IUser): Promise<void> {
+    async AddOrUpdateuser(user: IPlayer): Promise<void> {
         this.service.AddOrUpdateuser(user)
     }
 

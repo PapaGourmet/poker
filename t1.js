@@ -17,9 +17,16 @@ const config = {
     }
 }
 
+const objs = [1, 2, 3, 4]
+
+objs.length
+
 axios(config)
     .then(response => {
         const { data: { result } } = response
         const { random } = result
         console.log(random.data)
+        for (let i = 0; i < random.data.length; i += 2) {
+            console.log(i, i + 1)
+        }
     })

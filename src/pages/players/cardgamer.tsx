@@ -1,20 +1,34 @@
+import { useEffect, useState } from "react";
+
 interface ICardGamer {
     name: string,
     card1?: string,
     card2?: string,
     stack?: number,
     bet?: number,
-    position?: string
+    position?: string,
+    avatar?: string,
+    email?: string
 }
 
-const CardGamer: React.FC<ICardGamer> = ({ name, card1, card2, bet, position, stack }) => {
+const CardGamer: React.FC<ICardGamer> = ({ name, card1, card2, bet, position, stack, avatar, email }) => {
+
+    const [showCard, setShowCard] = useState(localStorage.getItem('email') === email)
+
     return (
         <main className=" flex items-center justify-center relative">
 
             <div className="z-30 flex flex-col">
                 <div className="grid grid-cols-12 w-full">
                     <div className="col-span-3 flex items-center justify-center">
-                        <div className="h-16 w-16 rounded-full bg-blue-400"></div>
+                        <div className="h-16 w-16 rounded-full bg-blue-400">
+                            <img
+                                src={avatar}
+                                alt="Imagem"
+                                width="75"
+                                height="150"
+                            />
+                        </div>
                     </div>
                 </div>
 
@@ -33,21 +47,37 @@ const CardGamer: React.FC<ICardGamer> = ({ name, card1, card2, bet, position, st
 
 
             <div className="absolute top-[-1rem] left-20 w[4rem] z-0">
-                <div className="flex">
+                {showCard && <div className="flex">
 
                     <img
-                        src="/9.png"
+                        src={card1 ? card1 + '.png' : '0.png'}
                         alt="Imagem"
                         width="75"
                         height="150"
                     />
                     <img
-                        src="/1.png"
+                        src={card2 ? card2 + '.png' : '0.png'}
                         alt="Imagem"
                         width="75"
                         height="150"
                     />
-                </div>
+                </div>}
+
+                {!showCard && <div className="flex">
+
+                    <img
+                        src={'versus.png'}
+                        alt="Imagem"
+                        width="75"
+                        height="150"
+                    />
+                    <img
+                        src={'versus.png'}
+                        alt="Imagem"
+                        width="75"
+                        height="150"
+                    />
+                </div>}
             </div>
         </main >
     );

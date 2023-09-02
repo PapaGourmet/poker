@@ -5,20 +5,21 @@ import {
   createBrowserRouter,
   RouterProvider,
 } from "react-router-dom"
-import App from './App';
+
 import ErrorPage from './pages/error/error-page';
 import HomeScreen from './pages/home/home';
 import TableScreen from './pages/home/tables/tables';
 import LoginScreen from './pages/login/login';
 import Unauthorized from './pages/unauthorized/unauthorized';
+import GameScreen from './pages/game/game';
 
 
 const queryClient = new QueryClient()
 const router = createBrowserRouter([
+
   {
-    path: "/",
-    errorElement: <ErrorPage />,
-    element: <App />
+    path: "/game",
+    element: <GameScreen />
   },
 
   {
@@ -34,7 +35,8 @@ const router = createBrowserRouter([
     element: <LoginScreen />
   },
   {
-    path: "/home",
+    path: "/",
+    errorElement: <ErrorPage />,
     element: <HomeScreen />,
     children: [
       {
