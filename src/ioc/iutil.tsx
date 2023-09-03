@@ -15,6 +15,7 @@ export interface IUtilService {
     changeUserOrders(players: IPlayer[]): IPlayer[]
     getNaipes(): INaipes[]
     getShuffleCards(): Promise<any>
+    getOrders(player: IPlayer[]): string[]
 }
 
 export class UtilService {
@@ -26,6 +27,10 @@ export class UtilService {
 
     getNaipes(): INaipes[] {
         return this.service.getNaipes()
+    }
+
+    getOrders(player: IPlayer[]): string[] {
+        return this.service.getOrders(player)
     }
 
     async getShuffleCards(): Promise<any> {

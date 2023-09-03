@@ -4,6 +4,45 @@ import { IPlayer } from "../interfaces/interfaces";
 
 
 export class UtilApplicationService implements IUtilService {
+    getOrders(players: IPlayer[]): string[] {
+        let orders = [
+            'SB',
+            'BB',
+            'UTG',
+            'HJ',
+            'CO',
+            'BT'
+        ]
+
+        const response: string[] = []
+
+        if (players) {
+            let lastUser = players.pop()
+            players.unshift(lastUser!)
+
+            if (players.length < 6) {
+                const diffLen = 6 - players.length
+                orders.splice(2, diffLen)
+            }
+
+            players.forEach((a, b, c) => {
+
+                if (b <= 1) {
+                    response.push(orders[b])
+                } else if ((c.length - 1) - b < 3) {
+                    const diff = (c.length - 1) - b
+                    response.push(orders[orders.length - 1 - diff])
+                } else if (b === 2) {
+                    response.push(orders[2])
+                } else {
+                    response.push(`UTG+${b - 2}`)
+                }
+            })
+        }
+
+        return response
+    }
+
     async getShuffleCards(): Promise<any> {
         const config: AxiosRequestConfig = {
             url: `https://api.random.org/json-rpc/4/invoke `,

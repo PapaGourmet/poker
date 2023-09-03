@@ -198,8 +198,6 @@ export class TableFirestoreService implements ITableService {
 
         try {
 
-            console.log(listPlayers)
-
             const tableSnapshot = await getDoc(tableRef)
 
             if (tableSnapshot.exists()) {

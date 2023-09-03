@@ -8,9 +8,9 @@ import { collection, query, where, } from "firebase/firestore"
 import dbDatabaseFirestore from '../../../database-config'
 import { useState } from "react"
 const _service = new TableFirestoreService()
+const service = new TableService(_service)
 const _utilService = new UtilApplicationService()
 const utilService = new UtilService(_utilService)
-const service = new TableService(_service)
 
 interface ITableProps {
     lord: string,
@@ -77,7 +77,6 @@ const TableScreen: React.FC<ITableProps> = ({ lord, code, setSuffleds }) => {
             player.card1 = '0'
             player.card2 = '0'
             player.active = false
-            console.log(player)
         }
 
         await service.updateAllPlayersTable(code, players)

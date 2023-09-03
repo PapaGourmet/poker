@@ -3,8 +3,12 @@ import { IPlayer } from "../../../interfaces/interfaces"
 import { TableService } from "../../../ioc/itableservice"
 import { TableFirestoreService } from "../../../ioc/tablefirestoreservice"
 import { timer } from 'rxjs'
+import { UtilService } from "../../../ioc/iutil"
+import { UtilApplicationService } from "../../../ioc/util"
 const _service = new TableFirestoreService()
 const service = new TableService(_service)
+const _utilService = new UtilApplicationService()
+const utilService = new UtilService(_utilService)
 
 interface ProgressComponentProps {
     active: boolean,
@@ -14,7 +18,7 @@ interface ProgressComponentProps {
     progressMarker: number
 }
 
-const ProgressComponent: React.FC<ProgressComponentProps> = ({ active, code, time, progressMarker }) => {
+const ProgressComponent: React.FC<ProgressComponentProps> = ({ active, code, time, progressMarker, players }) => {
 
     // const [counter, setCounter] = useState(0)
 
@@ -31,9 +35,7 @@ const ProgressComponent: React.FC<ProgressComponentProps> = ({ active, code, tim
         const s9 = timer(9000)
         const s10 = timer(10000)
 
-        console.log(progressMarker)
-
-        if (active) {
+        if (active && time !== 10) {
 
             s1.subscribe(async () => {
                 await service.updateTimeTurnProgress(code, 1)
@@ -73,6 +75,12 @@ const ProgressComponent: React.FC<ProgressComponentProps> = ({ active, code, tim
 
             s10.subscribe(async () => {
                 await service.updateTimeTurnProgress(code, 10)
+
+                const orders = utilService.getOrders(players)
+                console.log(players)
+
+                console.log(orders)
+
             })
 
         }
