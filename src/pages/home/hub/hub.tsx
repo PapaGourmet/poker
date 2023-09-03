@@ -1,16 +1,15 @@
-import { TableService } from "./ioc/itableservice"
-import { TableFirestoreService } from "./ioc/tablefirestoreservice"
+import { TableService } from "../../../ioc/itableservice"
 import { uid } from 'uid'
 import { ITable } from "../../../interfaces/interfaces"
 import TableComponent from "./components/tablecomponent"
 import RegsiterZodSchema from "./zods/zodtableschema"
-import { useEffect } from "react"
+import { TableFirestoreService } from "../../../ioc/tablefirestoreservice"
 
 
 const _service = new TableFirestoreService()
 const service = new TableService(_service)
 
-const TableScreen: React.FC = () => {
+const HubScreen: React.FC = () => {
 
     const { register, handleSubmit, reset, errors } = RegsiterZodSchema()
 
@@ -22,7 +21,10 @@ const TableScreen: React.FC = () => {
             code,
             lord: localStorage.getItem('lord') || "",
             players: [],
-            status: ''
+            status: '',
+            deck: [],
+            progress: 0,
+            position: ""
         }
 
         try {
@@ -71,4 +73,4 @@ const TableScreen: React.FC = () => {
     )
 }
 
-export default TableScreen
+export default HubScreen

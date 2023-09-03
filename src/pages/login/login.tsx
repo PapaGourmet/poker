@@ -44,8 +44,8 @@ const LoginScreen: React.FC = () => {
                     position: '',
                     action: '',
                     bet: 0,
-                    card1: 'versus',
-                    card2: 'versus'
+                    card1: '0',
+                    card2: '0'
 
                 })
                 navigate('/home/mesas')

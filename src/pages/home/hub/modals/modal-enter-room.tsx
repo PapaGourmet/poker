@@ -1,7 +1,7 @@
 
 import Modal from "react-modal"
-import { TableService } from "../ioc/itableservice"
-import { TableFirestoreService } from "../ioc/tablefirestoreservice"
+import { TableService } from "../../../../ioc/itableservice"
+import { TableFirestoreService } from "../../../../ioc/tablefirestoreservice"
 import CodeZodSchema from "../zods/zodcodechema"
 const _service = new TableFirestoreService()
 const service = new TableService(_service)

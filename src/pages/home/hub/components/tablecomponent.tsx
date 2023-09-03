@@ -8,9 +8,9 @@ import ModalEnterRoom from '../modals/modal-enter-room'
 import { toast, ToastContainer } from "react-toastify"
 import 'react-toastify/dist/ReactToastify.css'
 import { useNavigate } from 'react-router-dom'
-import { TableService } from '../ioc/itableservice'
-import { TableFirestoreService } from '../ioc/tablefirestoreservice'
+import { TableService } from '../../../../ioc/itableservice'
 import { UtilApplicationService } from '../../../../ioc/util'
+import { TableFirestoreService } from '../../../../ioc/tablefirestoreservice'
 const _service = new TableFirestoreService()
 const service = new TableService(_service)
 const notify = (message: string) => toast(message,
@@ -55,6 +55,24 @@ const TableComponent: React.FC = () => {
                         const obj = data[id]
 
                         try {
+
+                            service.getTable(confirmCode || "")
+                                .then(async (response) => {
+                                    const { players } = response
+
+                                    for (let player of players) {
+                                        player.card1 = '0'
+                                        player.card2 = '0'
+                                        player.active = false
+                                        console.log(player)
+                                    }
+
+                                    await service.updateAllPlayersTable(confirmCode || "", players)
+                                })
+
+                                .catch(e => { throw e })
+
+                            await service.updateFlopInit(confirmCode || "")
                             const table = await service.updatePlayerTable(confirmCode || "", EMAIL, obj)
                             const { status } = table
 

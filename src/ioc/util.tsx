@@ -92,7 +92,7 @@ export class UtilApplicationService implements IUtilService {
 
 
         let orders = [
-            'SM',
+            'SB',
             'BB',
             'UTG',
             'HJ',

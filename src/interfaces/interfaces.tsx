@@ -22,5 +22,10 @@ export interface ITable {
     code: string,
     lord: string,
     players: IPlayer[],
-    status: string // flop, turn, river
+    status: string // flop, turn, river,
+    deck: number[],
+    position: string,
+    progress: number,
+    progressMarker: number
+
 }
